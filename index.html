@@ -9,7 +9,35 @@
   <meta name="author" content="Fire9">
 
   
-  <meta name="description" content="今天是国外的感恩节，社会的发展让我们国人也喜欢过上国外的的节日，毕竟感恩还是很有意义的。在这里，我送上我的感恩的祝福: 感谢所有关心过我，帮助我的人，我就不一一列举了，要不真不知道要打多少字，还有就是很多人我已经想不起名字了，但是你们的帮助我永远不会忘记；在我最迷茫的时候，你们帮我指点方向； &hellip;">
+  <meta name="description" content="看到更新后的Gitolite失去了gl-easy-install脚本自动化安装，有些失望。由于着急用，就临时用老方法安装了一次，这里记录一下。 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +108,215 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2011/11/28/bu-shu-gitolitexiao-ji/">部署Gitolite小记</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-28T19:54:00+08:00" pubdate data-updated="true">Nov 28<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h4>看到更新后的Gitolite失去了gl-easy-install脚本自动化安装，有些失望。由于着急用，就临时用老方法安装了一次，这里记录一下。</h4>
+
+<pre>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>code snippet
+</span><span class='line'><span class="c"># groupadd gitolite</span>
+</span><span class='line'><span class="c"># useradd -g gitolite gitolite</span>
+</span><span class='line'><span class="c"># passwd gitolite</span>
+</span><span class='line'>Changing password <span class="k">for </span>user gitolite.
+</span><span class='line'>New UNIX password:
+</span><span class='line'>BAD PASSWORD: it is based on a dictionary word
+</span><span class='line'>Retype new UNIX password:
+</span><span class='line'>passwd: all authentication tokens updated successfully.
+</span><span class='line'>
+</span><span class='line'><span class="c"># su - gitolite</span>
+</span><span class='line'><span class="nv">$ </span>ssh-keygen
+</span><span class='line'>Generating public/private rsa key pair.
+</span><span class='line'>Enter file in which to save the key <span class="o">(</span>/home/gitolite/.ssh/id_rsa<span class="o">)</span>:
+</span><span class='line'>Created directory <span class="s1">&#39;/home/gitolite/.ssh&#39;</span>.
+</span><span class='line'>Enter passphrase <span class="o">(</span>empty <span class="k">for </span>no passphrase<span class="o">)</span>:
+</span><span class='line'>Enter same passphrase again:
+</span><span class='line'>Your identification has been saved in /home/gitolite/.ssh/id_rsa.
+</span><span class='line'>Your public key has been saved in /home/gitolite/.ssh/id_rsa.pub.
+</span><span class='line'>The key fingerprint is:
+</span><span class='line'><span class="nb">cd</span>:84:5d:f7:01:b6:a6:d9:6e:08:94:06:30:c2:36:7b gitolite@Labs03
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>scp ~/.ssh/id_rsa.pub gitolite@Labs03:git.pub
+</span><span class='line'>The authenticity of host <span class="s1">&#39;labs03 (127.0.0.1)&#39;</span> can<span class="s1">&#39;t be established.</span>
+</span><span class='line'><span class="s1">RSA key fingerprint is e8:bc:de:7a:79:d9:08:c9:a0:67:b3:71:0f:98:24:3a.</span>
+</span><span class='line'><span class="s1">Are you sure you want to continue connecting (yes/no)? yes</span>
+</span><span class='line'><span class="s1">Warning: Permanently added &#39;</span>labs03<span class="s1">&#39; (RSA) to the list of known hosts.</span>
+</span><span class='line'><span class="s1">gitolite@labs03&#39;</span>s password:
+</span><span class='line'>id_rsa.pub                                                                                                                                                  100%  397     0.4KB/s   00:00
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>git clone git://github.com/sitaramc/gitolite.git
+</span><span class='line'>Cloning into gitolite...
+</span><span class='line'>remote: Counting objects: 5580, <span class="k">done</span>.
+</span><span class='line'>remote: Compressing objects: 100% <span class="o">(</span>1912/1912<span class="o">)</span>, <span class="k">done</span>.
+</span><span class='line'>remote: Total 5580 <span class="o">(</span>delta 3943<span class="o">)</span>, reused 5210 <span class="o">(</span>delta 3615<span class="o">)</span>
+</span><span class='line'>Receiving objects: 100% <span class="o">(</span>5580/5580<span class="o">)</span>, 2.05 MiB | 213 KiB/s, <span class="k">done</span>.
+</span><span class='line'>Resolving deltas: 100% <span class="o">(</span>3943/3943<span class="o">)</span>, <span class="k">done</span>.
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>gitolite/
+</span><span class='line'><span class="nv">$ </span>git bundle create /tmp/gitolite.bdl --all
+</span><span class='line'>Counting objects: 5580, <span class="k">done</span>.
+</span><span class='line'>Delta compression using up to 2 threads.
+</span><span class='line'><span class="nv">$REPO_UMASK</span> <span class="o">=</span> 0077;
+</span><span class='line'>Compressing objects: 100% <span class="o">(</span>1584/1584<span class="o">)</span>, <span class="k">done</span>.
+</span><span class='line'>Writing objects: 100% <span class="o">(</span>5580/5580<span class="o">)</span>, 2.05 MiB, <span class="k">done</span>.
+</span><span class='line'>Total 5580 <span class="o">(</span>delta 3943<span class="o">)</span>, reused 5580 <span class="o">(</span>delta 3943<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>git bundle create /tmp/gitolite.bdl --all
+</span><span class='line'>Counting objects: 5580, <span class="k">done</span>.
+</span><span class='line'>Delta compression using up to 2 threads.
+</span><span class='line'>Compressing objects: 100% <span class="o">(</span>1584/1584<span class="o">)</span>, <span class="k">done</span>.
+</span><span class='line'>Writing objects: 100% <span class="o">(</span>5580/5580<span class="o">)</span>, 2.05 MiB, <span class="k">done</span>.
+</span><span class='line'>Total 5580 <span class="o">(</span>delta 3943<span class="o">)</span>, reused 5580 <span class="o">(</span>delta 3943<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>git clone /tmp/gitolite.bdl gitolite
+</span><span class='line'>Cloning into gitolite...
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>gitolite/
+</span><span class='line'><span class="nv">$ </span>src/gl-system-install
+</span><span class='line'>using default values <span class="k">for </span><span class="nv">EUID</span><span class="o">=</span>500:
+</span><span class='line'>/home/gitolite/bin /home/gitolite/share/gitolite/conf /home/gitolite/share/gitolite/hooks
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ~
+</span><span class='line'><span class="nv">$ </span>bin/gl-setup git.pub
+</span><span class='line'>The default settings in the rc file <span class="o">(</span>/home/gitolite/.gitolite.rc<span class="o">)</span> are fine <span class="k">for </span>most
+</span><span class='line'>people but <span class="k">if </span>you wish to make any changes, you can <span class="k">do </span>so now.
+</span><span class='line'>
+</span><span class='line'>hit enter...
+</span><span class='line'>creating gitolite-admin...
+</span><span class='line'>Initialized empty Git repository in /home/gitolite/repositories/gitolite-admin.git/
+</span><span class='line'>creating testing...
+</span><span class='line'>Initialized empty Git repository in /home/gitolite/repositories/testing.git/
+</span><span class='line'><span class="o">[</span>master <span class="o">(</span>root-commit<span class="o">)</span> bb78d7c<span class="o">]</span> start
+</span><span class='line'> 2 files changed, 6 insertions<span class="o">(</span>+<span class="o">)</span>, 0 deletions<span class="o">(</span>-<span class="o">)</span>
+</span><span class='line'> create mode 100644 conf/gitolite.conf
+</span><span class='line'> create mode 100644 keydir/git.pub
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>git clone gitolite@Labs03:gitolite-admin
+</span><span class='line'>Cloning into gitolite-admin...
+</span><span class='line'>remote: Counting objects: 6, <span class="k">done</span>.
+</span><span class='line'>remote: Compressing objects: 100% <span class="o">(</span>4/4<span class="o">)</span>, <span class="k">done</span>.
+</span><span class='line'>remote: Total 6 <span class="o">(</span>delta 0<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+</span><span class='line'>Receiving objects: 100% <span class="o">(</span>6/6<span class="o">)</span>, <span class="k">done</span>.
+</span></code></pre></td></tr></table></div></figure>
+
+</pre>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2011/11/24/gan-en-jie-de-gan-en/">感恩节的感恩</a></h1>
     
     
@@ -128,6 +365,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2011/11/28/bu-shu-gitolitexiao-ji/">部署Gitolite小记</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2011/11/24/gan-en-jie-de-gan-en/">感恩节的感恩</a>
