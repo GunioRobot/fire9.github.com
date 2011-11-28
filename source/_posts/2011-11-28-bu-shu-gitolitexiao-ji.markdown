@@ -3,7 +3,7 @@ layout: post
 title: "部署Gitolite小记"
 date: 2011-11-28 19:54
 comments: true
-categories: [git], [gitolite]
+categories: [Git, Gitolite]
 ---
 ####看到更新后的Gitolite失去了gl-easy-install脚本自动化安装，有些失望。由于着急用，就临时用老方法安装了一次，这里记录一下。
 
